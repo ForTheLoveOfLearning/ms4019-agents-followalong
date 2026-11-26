@@ -445,6 +445,6 @@ document.querySelectorAll('button.copy').forEach(function(btn){
   });
 });
 function fallback(text){ var ta=document.createElement('textarea'); ta.value=text; ta.setAttribute('readonly',''); ta.style.position='absolute'; ta.style.insetInlineStart='-9999px'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
-</script>
+function openOpt(h){var d=h&&document.querySelector(h);if(d&&d.tagName==='DETAILS'){d.open=true;}}document.querySelectorAll('.optiongrid a').forEach(function(a){a.addEventListener('click',function(){openOpt(a.getAttribute('href'));});});openOpt(location.hash);</script>
 </body>
 </html>
