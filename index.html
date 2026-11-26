@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en-CA" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="MSRAI_Label_c3feb43e-95d4-42a1-ae97-85d136991a95_AI_Disclosure" content="Made with AI">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Copilot Agents Follow-Along – MS-4019</title>
+<style>
+:root{--bg:#f7f5f2;--panel:#ffffff;--ink:#1f2328;--muted:#5c636a;--line:#e3ded7;--accent:#b5121b;--accent2:#7a0c12;--soft:#fbeeee;--code:#f3f1ee;--ok:#1a7f37;--bad:#b5121b;--info:#0b5cad;--infosoft:#eaf2fb}
+@media (prefers-color-scheme: dark){:root{--bg:#16181b;--panel:#1f2226;--ink:#e8e6e3;--muted:#a7adb3;--line:#33373c;--accent:#ff5a5f;--accent2:#ff8a8e;--soft:#2a1d1e;--code:#25292e;--ok:#4cc26b;--bad:#ff6b6b;--info:#7ab7ff;--infosoft:#1b2633}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:var(--accent)}
+header.hero{background:linear-gradient(135deg,#b5121b,#7a0c12);color:#fff;padding:2.2rem 1.25rem 1.6rem}
+header.hero .inner,main,nav.toc .inner{max-width:1080px;margin:0 auto}
+header.hero h1{margin:.2rem 0 .4rem;font-size:2rem;line-height:1.2}
+header.hero p{margin:.25rem 0;opacity:.95}
+.kicker{text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;opacity:.85}
+.meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.meta span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:.2rem .7rem;font-size:.85rem}
+nav.toc{position:sticky;top:0;z-index:5;background:var(--panel);border-block-end:1px solid var(--line)}
+nav.toc .inner{display:flex;gap:1rem;overflow-x:auto;padding:.6rem 1.25rem;white-space:nowrap}
+nav.toc a{text-decoration:none;color:var(--ink);font-weight:600;font-size:.92rem}
+nav.toc a:hover{color:var(--accent)}
+main{padding:1.25rem}
+section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.25rem 1.4rem;margin:1.1rem 0}
+section.big{border-block-start:6px solid var(--accent)}
+h2{margin:.2rem 0 .6rem;font-size:1.5rem}
+h3{margin:1.6rem 0 .5rem;font-size:1.2rem;padding-block-start:.8rem;border-block-start:1px dashed var(--line)}
+h4{margin:1rem 0 .4rem}
+h4.track{color:var(--accent2)}
+.disclaimer{font-size:.82rem;color:var(--muted);margin-block-start:.6rem}
+.tablewrap{overflow-x:auto;margin:.6rem 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{border:1px solid var(--line);padding:.45rem .6rem;text-align:start;vertical-align:top}
+th{background:var(--soft)}
+ul.files{list-style:none;padding:0;margin:.5rem 0;display:grid;gap:.4rem}
+ul.files li{display:flex;flex-wrap:wrap;gap:.25rem .75rem;align-items:baseline;background:var(--code);border-radius:8px;padding:.45rem .7rem}
+ul.files a{font-weight:600;text-decoration:none}
+ul.files a::before{content:"⬇ "}
+ul.files span{color:var(--muted);font-size:.88rem}
+ol.steps{padding-inline-start:1.3rem}
+ol.steps li{margin:.25rem 0}
+.prompt{border:1px solid var(--line);border-radius:10px;margin:.7rem 0;overflow:hidden}
+.prompt-head{display:flex;align-items:center;gap:.5rem;background:var(--soft);padding:.4rem .7rem}
+.plabel{font-weight:600;flex:1}
+.tag{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:var(--accent);color:#fff;border-radius:999px;padding:.1rem .55rem}
+button.copy{border:1px solid var(--accent);background:var(--panel);color:var(--accent);border-radius:6px;padding:.2rem .7rem;font-weight:600;cursor:pointer}
+button.copy:hover,button.copy.done{background:var(--accent);color:#fff}
+pre{margin:0;padding:.75rem .9rem;background:var(--code);white-space:pre-wrap;word-wrap:break-word;font-family:Consolas,"Cascadia Mono",Menlo,monospace;font-size:.88rem}
+.concept{background:var(--soft);border-radius:12px;padding:.9rem 1.1rem}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.9rem}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:.9rem}
+.card{border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;background:var(--panel)}
+.card h4{margin-block-start:.2rem}
+.scenario .hint{color:var(--muted);font-size:.88rem;margin-block-end:0}
+.compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.9rem;margin:.8rem 0}
+.compare .weak{border-inline-start:5px solid var(--bad);padding-inline-start:.8rem}
+.compare .strong{border-inline-start:5px solid var(--ok);padding-inline-start:.8rem}
+.callout{border-radius:10px;padding:.7rem .9rem;margin:.7rem 0}
+.callout.info{background:var(--infosoft);border-inline-start:5px solid var(--info)}
+.callout.warn{background:var(--soft);border-inline-start:5px solid var(--accent)}
+details.option{border:1px solid var(--line);border-radius:12px;margin:.8rem 0;background:var(--panel)}
+details.option>summary{cursor:pointer;padding:.85rem 1rem;font-weight:700;font-size:1.05rem;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;list-style:none}
+details.option>summary::-webkit-details-marker{display:none}
+details.option>summary::after{content:"＋";margin-inline-start:auto;color:var(--accent)}
+details.option[open]>summary::after{content:"－"}
+details.option[open]>summary{border-block-end:1px solid var(--line);background:var(--soft);border-radius:12px 12px 0 0}
+.optletter{background:var(--accent);color:#fff;border-radius:8px;padding:.05rem .55rem}
+.who{font-weight:400;font-size:.85rem;color:var(--muted);flex-basis:100%;padding-inline-start:2.2rem}
+.optbody{padding:.4rem 1.1rem 1rem}
+.optiongrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem;margin:.6rem 0}
+.optiongrid a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;background:var(--code)}
+.optiongrid a b{color:var(--accent)}
+footer{max-width:1080px;margin:0 auto;padding:1rem 1.25rem 2.5rem;color:var(--muted);font-size:.85rem}
+.learnmore{margin-block-start:1rem}
+.source{font-size:.85rem;opacity:.8;margin-top:1rem}
+@media print{nav.toc,button.copy{display:none}details.option{break-inside:avoid}section{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="inner">
+<div class="kicker">MS-4019 · Transform your everyday business processes with agents</div>
+<h1>Copilot Agents Follow-Along: Use them, then build your own</h1>
+<p>Two hands-on sections: <b>(1) Explore prebuilt Microsoft 365 Copilot agents</b> and <b>(2) Build and manage an agent</b>, with retail and corporate-office scenarios.</p>
+<div class="meta"><span>Classification: Public</span><span>Fictional company: MapleWheel Retail Group</span><span>Audience: store teams + head office (new to agents)</span><span>Locale: en-CA · CAD · metric</span></div>
+</div></header>
+<nav class="toc" aria-label="Page sections"><div class="inner">
+<a href="#start">Start here</a><a href="#files">Practice files</a><a href="#s1">1 · Prebuilt agents</a><a href="#s2">2 · Build an agent</a><a href="#options">Build options</a><a href="#wrap">Wrap-up</a>
+</div></nav>
+<main>
+<section id="start">
+<h2>Start here</h2>
+<p class="disclaimer">This follow-along uses a fictional company, <b>MapleWheel Retail Group</b>, created for demonstration purposes. Any resemblance to real organizations, people, products, services or data is coincidental. Do not use customer confidential information with these exercises.</p>
+<h3>Before you start</h3><ol class='steps'><li>Open <a href='https://m365.cloud.microsoft/chat' target='_blank' rel='noopener'>m365.cloud.microsoft/chat</a> and make sure the <b>Work</b> tab is selected.</li><li>Download the practice files below. Save them to your OneDrive in a folder named <code>MS-4019 Practice</code> so you can attach or add them as knowledge.</li><li>Use <b>only</b> these sample files today. Don't add customer, employee or other confidential data.</li><li>Menu names in Copilot change from time to time. If a button is named a little differently, look for the closest match.</li></ol>
+</section>
+
+<section id="files">
+<h2>Practice files</h2>
+<p>Download what you need for your exercises. Every file is fictional sample data.</p>
+<h4>Section 1 · Explore prebuilt agents</h4><ul class="files"><li><a href="data/section1-prebuilt-agents/MapleWheel-Store-Sales-Q4.xlsx" download>MapleWheel-Store-Sales-Q4.xlsx</a><span>Analyst · retail · 780 rows of weekly store sales, plus traffic and store sheets</span></li><li><a href="data/section1-prebuilt-agents/MapleWheel-Employee-Pulse-Survey.xlsx" download>MapleWheel-Employee-Pulse-Survey.xlsx</a><span>Analyst · corporate · 240 anonymous survey responses with comments</span></li><li><a href="data/section1-prebuilt-agents/Store-Team-Announcement-DRAFT.docx" download>Store-Team-Announcement-DRAFT.docx</a><span>Writing Coach · a rough announcement draft to improve</span></li></ul><h4>Section 2 · Build and manage an agent</h4><ul class="files"><li><a href="data/section2-build-an-agent/Store-Opening-Closing-Checklist.docx" download>Store-Opening-Closing-Checklist.docx</a><span>Trainer demo · Store Ops Helper knowledge</span></li><li><a href="data/section2-build-an-agent/MapleWheel-Winter-Product-Catalog.xlsx" download>MapleWheel-Winter-Product-Catalog.xlsx</a><span>Option A · winter tires, batteries, wipers and more</span></li><li><a href="data/section2-build-an-agent/Product-Care-and-Fit-FAQ.docx" download>Product-Care-and-Fit-FAQ.docx</a><span>Option A · product care and fit answers</span></li><li><a href="data/section2-build-an-agent/Regional-KPI-Snapshot.xlsx" download>Regional-KPI-Snapshot.xlsx</a><span>Option B · Q4 KPIs by region with status</span></li><li><a href="data/section2-build-an-agent/Q4-Priorities-Head-Office.docx" download>Q4-Priorities-Head-Office.docx</a><span>Option B · priorities, owners, risks and decisions</span></li><li><a href="data/section2-build-an-agent/New-Hire-Handbook.docx" download>New-Hire-Handbook.docx</a><span>Option C · first-30-days handbook</span></li><li><a href="data/section2-build-an-agent/New-Hire-30-Day-Checklist.xlsx" download>New-Hire-30-Day-Checklist.xlsx</a><span>Option C · store and head office onboarding tracks</span></li><li><a href="data/section2-build-an-agent/Store-Policies-and-Procedures.docx" download>Store-Policies-and-Procedures.docx</a><span>SharePoint agent · returns, price match, changeover, safety</span></li></ul>
+</section>
+
+<section id="s1" class="big">
+<h2>Section 1 · Explore prebuilt Microsoft 365 Copilot agents</h2>
+<p>Learn what an agent is, then try Microsoft's ready-made agents on retail and head office tasks.</p>
+<h3>1.0 What's an agent?</h3>
+<div class="concept">
+<h4>An agent is Copilot with a job description</h4>
+<p>Copilot Chat is a general assistant. An <b>agent</b> is focused on one job. It has its own instructions, knowledge and skills, so you get better answers with less prompting.</p>
+<ul>
+<li><b>Prebuilt agents</b> are made by Microsoft and ready to use (Section 1).</li>
+<li><b>Your own agents</b> are built by you for your team's work, with no code (Section 2).</li>
+</ul>
+<p><b>Where to find agents:</b> in Copilot Chat, look in the left pane under <b>Agents</b>. Select <b>All agents</b> (Agent Store) to find more, such as Prompt Coach, Idea Coach and Writing Coach, then select <b>Add</b>.</p>
+</div>
+<h3>1.1 Researcher: deep research with sources</h3>
+<p><b>Researcher</b> does deep, multi-step research across the web and your work content, then writes a structured report with sources. It can take <b>5 to 10 minutes</b>. While it runs, try the same prompt in regular Copilot Chat and compare the results.</p>
+<ol class='steps'><li>In Copilot Chat, under <b>Agents</b>, select <b>Researcher</b>.</li><li>Pick the <b>Retail</b> or <b>Corporate</b> prompt, copy it, and send it.</li><li>Answer any clarifying questions Researcher asks. That's part of how it works.</li><li>Review the sources. Ask a follow-up, such as <i>Turn this into a 5-bullet summary for my team</i>.</li></ol>
+<div class="prompt"><div class="prompt-head"><span class="plabel">R1 — Winter season readiness brief</span><span class="tag">Retail</span><button class="copy" type="button" data-target="p1">Copy</button></div><pre id="p1">You are helping a Canadian retail and auto-service organization prepare for peak winter season.
+Research current, publicly available information on:
+1) When Canadian drivers typically switch to winter tires and what drives the timing
+2) Provincial winter tire rules, especially Quebec and British Columbia
+3) What customers expect for booking and wait times at auto service centres
+Audience: store managers.
+Format: a one-page brief with 3 sections, key facts with sources, and 5 recommended actions for the next 4 weeks.
+Use Canadian spelling.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">R2 — AI in retail head offices</span><span class="tag">Corporate</span><button class="copy" type="button" data-target="p2">Copy</button></div><pre id="p2">Research how large Canadian and North American retailers are using generative AI and agents in head office functions such as merchandising, supply chain, HR and marketing.
+Summarize:
+- 5 trends, with examples and sources
+- 3 risks or governance considerations
+- 3 quick-win ideas a head office team could pilot in 90 days
+Audience: a leadership team that is new to agents. Keep it under 500 words.</pre></div>
+
+<h3>1.2 Analyst: turn data into insight</h3>
+<p><b>Analyst</b> reasons over data like a data analyst. It reads spreadsheets, runs calculations (with Python behind the scenes), finds patterns and creates charts. Select <b>Show work</b> or the code view to see the steps it took.</p>
+<ul class="files"><li><a href="data/section1-prebuilt-agents/MapleWheel-Store-Sales-Q4.xlsx" download>MapleWheel-Store-Sales-Q4.xlsx</a><span>Analyst · retail · 780 rows of weekly store sales, plus traffic and store sheets</span></li><li><a href="data/section1-prebuilt-agents/MapleWheel-Employee-Pulse-Survey.xlsx" download>MapleWheel-Employee-Pulse-Survey.xlsx</a><span>Analyst · corporate · 240 anonymous survey responses with comments</span></li></ul>
+<ol class='steps'><li>In Copilot Chat, under <b>Agents</b>, select <b>Analyst</b>.</li><li>Attach the file with the <b>+</b> (Add content) button, choosing upload or OneDrive.</li><li>Copy a prompt and send it. Then follow up with <i>Why?</i>, <i>Show this as a chart</i> or <i>What should I do about it?</i></li></ol>
+<h4 class="track">Retail track · MapleWheel-Store-Sales-Q4.xlsx</h4>
+<div class="prompt"><div class="prompt-head"><span class="plabel">A1 — Sales vs target</span><span class="tag">Retail</span><button class="copy" type="button" data-target="p3">Copy</button></div><pre id="p3">Using MapleWheel-Store-Sales-Q4.xlsx, compare total net sales with sales target by region and by category for the quarter.
+Which regions and categories are above or below target, and by how much (in CAD and %)?
+Show a summary table and a bar chart.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">A2 — Find the problem weeks</span><span class="tag">Retail</span><button class="copy" type="button" data-target="p4">Copy</button></div><pre id="p4">In the Weekly Sales sheet, find stores and weeks where Winter Tires sales were unusually low compared with that store&#x27;s own trend.
+Flag possible stock-outs or data-quality issues (for example, missing values) and explain how you identified each one.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">A3 — Traffic vs conversion</span><span class="tag">Retail</span><button class="copy" type="button" data-target="p5">Copy</button></div><pre id="p5">Join the Weekly Sales and Weekly Traffic sheets on Store ID and Week Ending.
+Calculate net sales per visitor for each store for the quarter.
+Which stores have high traffic but low sales per visitor? Suggest 3 practical actions a store manager could take this week.</pre></div>
+<h4 class="track">Corporate track · MapleWheel-Employee-Pulse-Survey.xlsx</h4>
+<div class="prompt"><div class="prompt-head"><span class="plabel">A4 — Survey heat map</span><span class="tag">Corporate</span><button class="copy" type="button" data-target="p6">Copy</button></div><pre id="p6">Using MapleWheel-Employee-Pulse-Survey.xlsx, calculate the average score for each question (Q1 to Q6) by department and by location type (Store vs Head Office).
+Show a heat-map style table and highlight the 3 lowest-scoring areas.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">A5 — Comment themes</span><span class="tag">Corporate</span><button class="copy" type="button" data-target="p7">Copy</button></div><pre id="p7">Group the Open Comment responses into 5 themes. Count the comments in each theme and quote one representative comment per theme.
+Then compare Copilot Usage with Q3 (Copilot confidence) scores. What does this suggest about Copilot adoption, and what 3 actions would you recommend?</pre></div>
+
+<h3>1.3 The coaches: Prompt, Idea and Writing</h3>
+<p>These three Microsoft agents coach you rather than doing the work for you. If you don't see them under <b>Agents</b>, open <b>All agents</b>, search for them by name and select <b>Add</b>.</p>
+<ul class="files"><li><a href="data/section1-prebuilt-agents/Store-Team-Announcement-DRAFT.docx" download>Store-Team-Announcement-DRAFT.docx</a><span>Writing Coach · a rough announcement draft to improve</span></li></ul>
+<div class="grid3">
+<div class="card"><h4>🎯 Prompt Coach</h4><p>Helps you write, improve and evaluate prompts.</p>
+<div class="prompt"><div class="prompt-head"><span class="plabel">PC1</span><span class="tag">Retail</span><button class="copy" type="button" data-target="p8">Copy</button></div><pre id="p8">Improve this prompt and explain what you changed and why: &quot;make a schedule for the holidays&quot;</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">PC2</span><span class="tag">Corporate</span><button class="copy" type="button" data-target="p9">Copy</button></div><pre id="p9">Here&#x27;s a prompt I use: &quot;write something about our Q4 results&quot;. Rate it out of 10 using goal, context, source and expectations, then rewrite it.</pre></div>
+</div>
+<div class="card"><h4>💡 Idea Coach</h4><p>Brainstorms with you by asking questions first.</p>
+<div class="prompt"><div class="prompt-head"><span class="plabel">IC1</span><span class="tag">Retail</span><button class="copy" type="button" data-target="p10">Copy</button></div><pre id="p10">Help me brainstorm ideas for an in-store holiday event that brings families into our stores in December without adding staff hours. Ask me 3 questions first, then give me 10 ideas grouped by effort (low, medium, high).</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">IC2</span><span class="tag">Corporate</span><button class="copy" type="button" data-target="p11">Copy</button></div><pre id="p11">Help me come up with ways to get more head office employees using Copilot every week. Ask me questions first, then rank your top 5 ideas by impact.</pre></div>
+</div>
+<div class="card"><h4>✍️ Writing Coach</h4><p>Gives feedback on your writing and helps you improve it.</p>
+<div class="prompt"><div class="prompt-head"><span class="plabel">WC1</span><span class="tag">Retail</span><button class="copy" type="button" data-target="p12">Copy</button></div><pre id="p12">Review the attached Store-Team-Announcement-DRAFT.docx. Give me feedback on clarity, tone and length for store associates. Then suggest a tighter version under 150 words with clear headings and the safety reminder up front.</pre></div>
+</div>
+</div>
+
+<h3>1.4 Your turn: agent of your choice</h3><p>Pick a scenario card, decide which agent fits best, write your own prompt and run it. Be ready to share in chat: <i>which agent did you pick, and why?</i></p><div class='grid3'><div class='card scenario'><span class='tag'>Retail</span><h4>🛞 Store manager</h4><p>Your region missed target on Winter Tires last quarter. Find out where and why.</p><p class='hint'>Suggested agent: Analyst + MapleWheel-Store-Sales-Q4.xlsx</p></div><div class='card scenario'><span class='tag'>Retail</span><h4>🔧 Auto service lead</h4><p>Customers keep asking why they should switch tires at 7 °C. Create a short, friendly explainer for the service desk.</p><p class='hint'>Suggested agent: Researcher, then Writing Coach</p></div><div class='card scenario'><span class='tag'>Retail</span><h4>🎄 Seasonal team lead</h4><p>Plan a fun, 10-minute huddle to kick off the holiday rush with new seasonal hires.</p><p class='hint'>Suggested agent: Idea Coach</p></div><div class='card scenario'><span class='tag'>Corporate</span><h4>👥 People & Culture partner</h4><p>The pulse survey shows low Copilot confidence. Build a short plan to fix it.</p><p class='hint'>Suggested agent: Analyst + MapleWheel-Employee-Pulse-Survey.xlsx</p></div><div class='card scenario'><span class='tag'>Corporate</span><h4>📊 Merchandising analyst</h4><p>Leadership wants a competitive scan of winter accessories trends before next season&#x27;s buy.</p><p class='hint'>Suggested agent: Researcher</p></div><div class='card scenario'><span class='tag'>Corporate</span><h4>📣 Comms specialist</h4><p>Your Copilot prompts keep giving generic results. Fix your three most-used prompts.</p><p class='hint'>Suggested agent: Prompt Coach</p></div></div>
+<h3>Which agent when?</h3><div class="tablewrap"><table class=""><thead><tr><th>If you need to…</th><th>Use</th><th>Example</th></tr></thead><tbody><tr><td>Research a topic deeply, with sources</td><td><b>Researcher</b></td><td>Winter readiness brief; competitor scan</td></tr><tr><td>Analyze numbers, find trends, make charts</td><td><b>Analyst</b></td><td>Sales vs target; survey heat map</td></tr><tr><td>Write a better prompt</td><td><b>Prompt Coach</b></td><td>Turn "make a schedule" into a strong prompt</td></tr><tr><td>Generate and shape ideas</td><td><b>Idea Coach</b></td><td>Holiday event ideas</td></tr><tr><td>Improve your own writing</td><td><b>Writing Coach</b></td><td>Tighten a store announcement</td></tr><tr><td>Answer the same questions again and again from your own documents</td><td><b>Build your own agent</b> (Section 2)</td><td>Product questions, onboarding, meeting prep</td></tr></tbody></table></div>
+</section>
+
+<section id="s2" class="big">
+<h2>Section 2 · Build and manage an agent</h2>
+<p>Move from using agents to building one for your team's everyday work, with no code.</p>
+<h3>2.0 Where to build, and what goes into an agent</h3><div class="tablewrap"><table class=""><thead><tr><th>Where to build</th><th>Best for</th><th>Today?</th></tr></thead><tbody><tr><td><b>Copilot Chat</b> agent builder (<b>New agent</b> / <b>Create agent</b>)</td><td>Personal and team helpers grounded in files, SharePoint and the web. No code.</td><td>✅ Main build</td></tr><tr><td><b>SharePoint</b> agent</td><td>Quick Q&amp;A over a site or document library, inheriting its permissions</td><td>✅ Demo / stretch</td></tr><tr><td><b>Copilot Studio</b></td><td>Advanced agents with workflows, actions and connectors, usually built with IT</td><td>ℹ️ Just so you know it exists</td></tr></tbody></table></div><div class="tablewrap"><table class=""><thead><tr><th>Part of an agent</th><th>What it does</th><th>Tip</th></tr></thead><tbody><tr><td>Name and description</td><td>Tells people what the agent is for</td><td>Make the description say who it helps and with what</td></tr><tr><td>Instructions</td><td>How the agent behaves: role, steps, format, tone, boundaries</td><td>This is where most of the quality comes from</td></tr><tr><td>Knowledge</td><td>Where answers come from: files, SharePoint, websites</td><td>Fewer, better sources beat lots of sources</td></tr><tr><td>Capabilities</td><td>Extras such as code interpreter (analysis) or image creation</td><td>Turn on only what's needed</td></tr><tr><td>Starter prompts</td><td>Clickable examples so people know how to use it</td><td>Write them in your users' words</td></tr></tbody></table></div>
+<div class="compare">
+<div class="weak"><h4>❌ Weak instructions</h4><pre>Help store staff with questions.</pre></div>
+<div class="strong"><h4>✅ Strong instructions</h4><pre>You are Store Ops Helper for MapleWheel stores.
+Purpose: answer opening and closing checklist questions for associates and supervisors.
+Use only the Store-Opening-Closing-Checklist file.
+Answer in short numbered steps, under 120 words.
+If the answer isn't in the checklist, say so and suggest asking the store manager.
+Never give advice on cash or security beyond the documented steps.
+Use Canadian spelling.</pre></div>
+</div>
+<h3>2.1 Trainer demo: Store Ops Helper</h3>
+<p>Watch the trainer build this agent first. You can follow along or just watch, because you'll build your own next.</p>
+<ul class="files"><li><a href="data/section2-build-an-agent/Store-Opening-Closing-Checklist.docx" download>Store-Opening-Closing-Checklist.docx</a><span>Trainer demo · Store Ops Helper knowledge</span></li></ul>
+<ol class='steps'><li>In Copilot Chat, select <b>New agent</b> (or <b>Create agent</b>) in the left pane. Agent builder opens with <b>Describe</b> and <b>Configure</b> tabs.</li><li>On <b>Describe</b>, paste the prompt below. Agent builder drafts the name, description and instructions for you.</li><li>Switch to <b>Configure</b>. Replace the instructions with the strong version above, then add <b>Store-Opening-Closing-Checklist.docx</b> under <b>Knowledge</b>.</li><li>Add the starter prompts below, test in the <b>preview</b> pane on the right, then select <b>Create</b>.</li></ol>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Describe tab</span><button class="copy" type="button" data-target="p13">Copy</button></div><pre id="p13">Create an agent called Store Ops Helper. It answers questions about our store opening and closing checklists for associates and supervisors. Use the checklist document as its only source. Answers should be short numbered steps. If something isn&#x27;t in the checklist, it should say so and suggest asking the store manager.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Starter prompts</span><button class="copy" type="button" data-target="p14">Copy</button></div><pre id="p14">What do I do first when I open the store?
+What&#x27;s on the closing checklist for the auto service bay?
+Who has to be there for the cash count at close?
+What do I do if the alarm code doesn&#x27;t work?</pre></div>
+
+<h3 id="options">2.2 Your turn: build your own agent (choose one of 4 options)</h3>
+<div class="optiongrid">
+<a href="#option-a"><b>A · Product Knowledge Helper</b><br>Retail: answer customer product questions</a>
+<a href="#option-b"><b>B · Meeting Prep Assistant</b><br>Corporate: be ready for any meeting in 5 minutes</a>
+<a href="#option-c"><b>C · New-Hire Onboarding Buddy</b><br>Store and head office: first 30 days</a>
+<a href="#option-d"><b>D · Immersion Experience – Agents (Executives)</b><br>Start from a real work challenge, then build a retrieval-based agent</a>
+</div>
+
+<details class="option" id="option-a">
+<summary><span class="optletter">A</span> 🛞 Product Knowledge Helper<span class="who">Retail · store associates and service advisors</span></summary>
+<div class="optbody">
+<h4>1 · Get the knowledge files</h4>
+<ul class="files"><li><a href="data/section2-build-an-agent/MapleWheel-Winter-Product-Catalog.xlsx" download>MapleWheel-Winter-Product-Catalog.xlsx</a><span>Option A · winter tires, batteries, wipers and more</span></li><li><a href="data/section2-build-an-agent/Product-Care-and-Fit-FAQ.docx" download>Product-Care-and-Fit-FAQ.docx</a><span>Option A · product care and fit answers</span></li></ul>
+<h4>2 · Build it</h4>
+<ol class='steps'><li>Select <b>New agent</b> in Copilot Chat, then open the <b>Configure</b> tab.</li><li>Paste the <b>Name</b>, <b>Description</b> and <b>Instructions</b> below.</li><li>Under <b>Knowledge</b>, add the files listed above, either by uploading them or by choosing them from OneDrive.</li><li>Add the <b>starter prompts</b>, test in the preview pane, then select <b>Create</b>.</li></ol>
+
+<div class="prompt"><div class="prompt-head"><span class="plabel">Name</span><button class="copy" type="button" data-target="p15">Copy</button></div><pre id="p15">Winter Product Pro</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Description</span><button class="copy" type="button" data-target="p16">Copy</button></div><pre id="p16">Helps MapleWheel associates answer customer questions about winter products, including specs, fit basics, prices and care tips, using our product catalogue and FAQ.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Instructions</span><button class="copy" type="button" data-target="p17">Copy</button></div><pre id="p17">You are Winter Product Pro, a product knowledge helper for MapleWheel store associates and service advisors.
+Goal: help associates answer customer questions about winter products quickly and accurately.
+
+Knowledge: always check MapleWheel-Winter-Product-Catalog.xlsx and Product-Care-and-Fit-FAQ.docx first.
+
+How to respond:
+- Lead with a direct answer in 1-2 sentences, then key details as bullets (SKU, price in CAD, key specs).
+- When comparing products, use a short table.
+- Before recommending tires, ask for the tire size (for example 225/65R17) if it wasn&#x27;t given.
+- Suggest at most one add-on, and only if it genuinely helps the customer.
+
+Boundaries:
+- If something isn&#x27;t in the knowledge files, say &quot;I don&#x27;t have that in our product guide&quot; and suggest checking with a service advisor.
+- Never invent prices, stock levels or warranties.
+- Don&#x27;t give legal advice. For provincial winter tire rules, share what the FAQ says and recommend checking the provincial government website.
+
+Tone: friendly, plain language, Canadian spelling.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Starter prompts</span><button class="copy" type="button" data-target="p18">Copy</button></div><pre id="p18">Compare the winter tires we carry in 225/65R17.
+What does the three-peak mountain snowflake symbol mean?
+A customer has a 5-year-old battery and slow starts. What should I suggest?
+Which washer fluid is rated for -40 °C?</pre></div>
+<h4>3 · Test it (and try to break it)</h4>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Test prompts</span><button class="copy" type="button" data-target="p19">Copy</button></div><pre id="p19">Is the Glacier Grip TourPlus a winter tire? Can a Quebec customer use it in January?
+Do we carry snow chains?   (Not in the catalogue. The agent should say so, not guess.)
+What&#x27;s the best pizza place near the store?   (Off-topic. The agent should politely decline.)
+What winter tires do you recommend?   (No size given. The agent should ask for it.)</pre></div>
+</div></details>
+<details class="option" id="option-b">
+<summary><span class="optletter">B</span> 📋 Meeting Prep Assistant<span class="who">Corporate · head office and store managers</span></summary>
+<div class="optbody">
+<h4>1 · Get the knowledge files</h4>
+<ul class="files"><li><a href="data/section2-build-an-agent/Regional-KPI-Snapshot.xlsx" download>Regional-KPI-Snapshot.xlsx</a><span>Option B · Q4 KPIs by region with status</span></li><li><a href="data/section2-build-an-agent/Q4-Priorities-Head-Office.docx" download>Q4-Priorities-Head-Office.docx</a><span>Option B · priorities, owners, risks and decisions</span></li></ul><div class="callout info"><strong>No sample meetings are included.</strong> Prep for a real upcoming meeting on your own calendar, or simply name a topic and region, for example <i>Prairies operations review</i>. If your organization allows it, you can also add your own work content, such as Teams and email, as a knowledge source. The agent can only see what you already have access to.</div>
+<h4>2 · Build it</h4>
+<ol class='steps'><li>Select <b>New agent</b> in Copilot Chat, then open the <b>Configure</b> tab.</li><li>Paste the <b>Name</b>, <b>Description</b> and <b>Instructions</b> below.</li><li>Under <b>Knowledge</b>, add the files listed above, either by uploading them or by choosing them from OneDrive.</li><li>Add the <b>starter prompts</b>, test in the preview pane, then select <b>Create</b>.</li></ol>
+
+<div class="prompt"><div class="prompt-head"><span class="plabel">Name</span><button class="copy" type="button" data-target="p20">Copy</button></div><pre id="p20">Meeting Prep Assistant</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Description</span><button class="copy" type="button" data-target="p21">Copy</button></div><pre id="p21">Gets MapleWheel managers ready for any operations or project meeting in 5 minutes, covering key KPIs, links to Q4 priorities, questions to ask and likely questions to expect.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Instructions</span><button class="copy" type="button" data-target="p22">Copy</button></div><pre id="p22">You are Meeting Prep Assistant for MapleWheel managers.
+Goal: help me walk into any operations or project meeting prepared in 5 minutes.
+
+When I name a meeting, topic or region:
+1) Summarize the relevant KPIs from Regional-KPI-Snapshot.xlsx: actual vs target, recent trend, and anything Red or Amber.
+2) Connect them to the Q4 priorities, owners and decisions in Q4-Priorities-Head-Office.docx.
+3) List 3 questions I should ask and 2 questions I&#x27;m likely to be asked, each with a suggested answer.
+4) End with a 3-bullet &quot;What I need from this meeting&quot;.
+
+Format: short headings, bullets and one small table. Keep it under 300 words.
+If a number isn&#x27;t in the files, say so. Never estimate or invent KPIs.
+If I don&#x27;t say which region or topic, ask me before answering.
+Tone: confident, concise, executive. Canadian spelling.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Starter prompts</span><button class="copy" type="button" data-target="p23">Copy</button></div><pre id="p23">Prep me for a Prairies operations review.
+I&#x27;m meeting the supply chain lead about online pickup on-time rates. What should I know?
+Which priorities are Red, and what decisions are needed before December 15?
+Give me a 60-second opening for a check-in with the Ontario region.</pre></div>
+<h4>3 · Test it (and try to break it)</h4>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Test prompts</span><button class="copy" type="button" data-target="p24">Copy</button></div><pre id="p24">Prep me for my meeting.   (Vague. The agent should ask which region or topic.)
+What will Q1 sales be in Quebec?   (Not in the files. The agent shouldn&#x27;t invent a forecast.)
+Compare Copilot adoption across regions and tell me which region to pilot agents in first.</pre></div>
+</div></details>
+<details class="option" id="option-c">
+<summary><span class="optletter">C</span> 🤝 New-Hire Onboarding Buddy<span class="who">Store and head office · new and seasonal team members</span></summary>
+<div class="optbody">
+<h4>1 · Get the knowledge files</h4>
+<ul class="files"><li><a href="data/section2-build-an-agent/New-Hire-Handbook.docx" download>New-Hire-Handbook.docx</a><span>Option C · first-30-days handbook</span></li><li><a href="data/section2-build-an-agent/New-Hire-30-Day-Checklist.xlsx" download>New-Hire-30-Day-Checklist.xlsx</a><span>Option C · store and head office onboarding tracks</span></li></ul>
+<h4>2 · Build it</h4>
+<ol class='steps'><li>Select <b>New agent</b> in Copilot Chat, then open the <b>Configure</b> tab.</li><li>Paste the <b>Name</b>, <b>Description</b> and <b>Instructions</b> below.</li><li>Under <b>Knowledge</b>, add the files listed above, either by uploading them or by choosing them from OneDrive.</li><li>Add the <b>starter prompts</b>, test in the preview pane, then select <b>Create</b>.</li></ol>
+
+<div class="prompt"><div class="prompt-head"><span class="plabel">Name</span><button class="copy" type="button" data-target="p25">Copy</button></div><pre id="p25">Onboarding Buddy</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Description</span><button class="copy" type="button" data-target="p26">Copy</button></div><pre id="p26">A friendly guide that helps new MapleWheel team members in stores and at head office find answers about their first 30 days.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Instructions</span><button class="copy" type="button" data-target="p27">Copy</button></div><pre id="p27">You are Onboarding Buddy, a friendly guide for new MapleWheel team members in stores and at head office.
+Goal: help new hires find answers about their first 30 days without feeling awkward asking.
+
+Use only New-Hire-Handbook.docx and New-Hire-30-Day-Checklist.xlsx.
+If someone says they&#x27;re new, ask whether they work in a store or at head office, and which week they&#x27;re in. Then tailor the answer to that track.
+
+How to respond:
+- Short answers (under 120 words) with clear next steps.
+- Name who to ask by role (for example &quot;your supervisor&quot;), never by a person&#x27;s name.
+- For safety questions, follow the handbook steps exactly and remind them not to do any task they haven&#x27;t been trained on.
+
+Boundaries:
+- If the answer isn&#x27;t in the files, say so and suggest their manager or the People team.
+- Don&#x27;t answer questions about personal pay disputes, medical issues or HR complaints. Kindly point them to the People team.
+
+Tone: warm, encouraging, plain language. Canadian spelling.</pre></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Starter prompts</span><button class="copy" type="button" data-target="p28">Copy</button></div><pre id="p28">It&#x27;s my first week in a store. What should I have done by Friday?
+How do I request time off?
+What&#x27;s the safe way to get a tire from the top rack?
+What does BOPIS mean?</pre></div>
+<h4>3 · Test it (and try to break it)</h4>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Test prompts</span><button class="copy" type="button" data-target="p29">Copy</button></div><pre id="p29">I&#x27;m new!   (The agent should ask store or head office and which week.)
+Can I take December 20 off?   (The agent should mention the peak-season blackout dates.)
+My last pay cheque was wrong and I&#x27;m really upset.   (The agent should point to the People team, not try to fix it.)</pre></div>
+</div></details>
+<details class="option" id="option-d">
+<summary><span class="optletter">D</span> 🧭 Immersion Experience – Agents (Executives)<span class="who">Any role · your own challenge</span></summary>
+<div class="optbody">
+<p>Explore how Microsoft Copilot and Agent builder can help you address a real work-related challenge by designing a simple <b>retrieval-based agent</b>. This exercise will walk you through identifying an issue, breaking it down, exploring where AI might help, and then creating a conceptual agent to solve it.</p>
+<p>You'll perform four tasks:</p>
+<ul>
+<li>Identify a work-related issue</li>
+<li>Break down the problem and explore where AI could help</li>
+<li>Use <b>Researcher</b> to uncover insights and solution ideas</li>
+<li>Conceptualize and mock up a retrieval-based agent in <b>Agent builder</b></li>
+</ul>
+<div class="callout info"><strong>NOTE:</strong> Sample prompts are provided to help you get started—feel free to personalize them to fit your situation. If you’d like help generating or refining prompts, try the <a href='https://appsource.microsoft.com/en-us/product/office/WA200007578' target='_blank' rel='noopener'>Prompt Coach agent</a>, which can suggest, improve, and evaluate prompts so you get better results with Copilot.</div>
+
+<h4>Task 1: Identify a Work-Related Challenge</h4>
+<p>Start by thinking about a real issue you encounter in your role—something that slows you down or makes information harder to access. You can reflect individually, or use <b>Copilot Chat</b> as a partner to help generate ideas and identify a challenge where retrieving and organizing knowledge would make a difference.</p>
+<p>To guide your thinking, consider:</p>
+<ul>
+<li><b>What’s working well today</b></li>
+<li><b>What’s not working well</b></li>
+<li><b>Where AI <i>might</i> be able to help</b></li>
+</ul>
+<p><b>Steps:</b></p>
+<ul>
+<li>Open a new browser tab and navigate to <a href="https://m365.cloud.microsoft/chat" target="_blank" rel="noopener">m365.cloud.microsoft/chat</a>.</li>
+<li>Ensure the <b>Work mode</b> tab is selected in <b>Copilot Chat</b>:</li>
+</ul>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Sample Prompt</span><button class="copy" type="button" data-target="p30">Copy</button></div><pre id="p30">I’m researching common day-to-day issues I face at work, such as processes, collaboration, or time management. Look at recent conversations from [Teams chats, Outlook emails, or other collaboration tools] related to [your role focus]. Summarize the key issues or pain points mentioned in the last 6 months. Show the results in a table with:
+
+- Title: Short label for the issue
+- Description: Brief summary of the challenge
+- Frequency: How often it comes up (e.g., number of mentions)</pre></div>
+
+<h4>Task 2: Break Down the Problem</h4>
+<p>Using <b>Copilot Chat</b>, take the challenge you identified in Task 1 and break it into smaller parts:</p>
+<ul>
+<li>What makes this issue difficult?</li>
+<li>Where does information get stuck or lost?</li>
+<li>Who is impacted most?</li>
+</ul>
+<p><b>Try a sample prompt like this:</b></p>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Sample Prompt</span><button class="copy" type="button" data-target="p31">Copy</button></div><pre id="p31">Break down the problem of [insert challenge]. Identify root causes, pain points, and which areas of work are most affected.</pre></div>
+<div class="callout info"><strong>TIP:</strong> Think about where retrieval of knowledge would save you time or help your team make faster decisions.</div>
+
+<h4>Task 3: Explore AI Solution Ideas with Researcher</h4>
+<p>Use the <b>Researcher Agent</b> to see how Copilot and agents could help. Focus on solutions that retrieve, organize, or summarize knowledge—not automate tasks.</p>
+<p><b>Steps:</b></p>
+<ul>
+<li>Open a new browser tab and navigate to <a href="https://m365.cloud.microsoft/chat" target="_blank" rel="noopener">m365.cloud.microsoft/chat</a>.</li>
+<li>In the Copilot Chat menu, expand <b>Agents</b> (if necessary) and select <b>Researcher</b>.</li>
+</ul>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Sample Prompt (Researcher Agent)</span><button class="copy" type="button" data-target="p32">Copy</button></div><pre id="p32">Explore possible AI solutions to address [insert problem]. Focus on retrieval-based approaches using Microsoft Copilot, Agent builder agents, or connected knowledge sources. Summarize three possible solution approaches, their benefits, and limitations.</pre></div>
+<div class="callout info"><strong>TIP:</strong> Look for opportunities where an agent could make knowledge easier to find, reuse, or share.</div>
+<div class="callout info"><strong>NOTE:</strong> Researcher may take 5–10 minutes (or more) to complete, depending on your request. Its responses are highly detailed, so while it’s working, try running the same prompt in Copilot Chat. Comparing the two outputs is a great way to see how each tool approaches the task.</div>
+
+<h4>Task 4: Build Your Agent</h4>
+<p>Now, take your insights and create a simple mock agent in <b>Agent builder lite</b>. Keep the focus on retrieval—your agent should help surface, organize, or summarize information.</p>
+<p><b>Steps:</b></p>
+<p><b>Start in Agent builder lite</b></p>
+<ol class="steps">
+<li>Open your browser and navigate to <a href="https://m365.cloud.microsoft/chat" target="_blank" rel="noopener">m365.cloud.microsoft/chat</a>.</li>
+<li>Select <b>New agent</b> in the navigation pane to launch <b>Agent builder</b>.</li>
+</ol>
+<p><b>Define your Agent (Describe tab or Configure tab)</b></p>
+<ol class="steps">
+<li>In the <b>Describe the agent you want to create</b> prompt box, draft your agent’s role. For example:</li>
+</ol>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Sample Prompt</span><button class="copy" type="button" data-target="p33">Copy</button></div><pre id="p33">You’re a virtual assistant for our [project/team name]. Your role is to help with [key tasks]. Be concise, stay on-brand, and reference our shared resources when possible.</pre></div>
+<p><b>Customize your Agent</b></p>
+<p>In the <b>Configure</b> tab, explore these options:</p>
+<ol class="steps">
+<li>Add at least one knowledge source (e.g., a document saved to OneDrive/SharePoint or Your emails).</li>
+<li>Define suggested prompts to help others get started with your agent</li>
+</ol>
+<div class="callout info"><strong>TIP:</strong> Suggested prompts help guide users on how to interact with your agent.</div>
+<p><b>Test and Create</b></p>
+<ol class="steps">
+<li>Use the <b>Preview</b> feature (available in the right pane throughout the agent-building process) to try out your draft version of your agent and refine any issues.</li>
+<li>Once satisfied, select <b>Create</b> to publish the agent.</li>
+<li>Share your agent with others or open it for immediate use.</li>
+</ol>
+<div class="callout info"><strong>TIP:</strong> The goal isn’t to build a perfect agent today—it’s to explore how retrieval-focused agents can make knowledge easier to access in your daily work.</div>
+<p class="source">Source: <a href="https://microsoftlearning.github.io/MS-4021-Copilot-Immersion-Experience/Instructions/Prompts/Exec-Agents.html" target="_blank" rel="noopener">MS-4021 Copilot Immersion Experience</a> © Microsoft Corporation, MIT License.</p>
+</div></details>
+<h3>2.3 Test and edit</h3>
+<p>Use your agent like a real user, then make it better. Edit it from the <b>…</b> menu next to the agent's name, then <b>Edit</b>, and update it after each change.</p>
+<div class="tablewrap"><table class=""><thead><tr><th>Test</th><th>What good looks like</th></tr></thead><tbody><tr><td>3 normal questions from your starter prompts</td><td>Accurate, short, in the format you asked for</td></tr><tr><td>1 question the knowledge doesn't cover</td><td>The agent says it doesn't know, and doesn't guess</td></tr><tr><td>1 off-topic question</td><td>The agent politely declines</td></tr><tr><td>1 vague question</td><td>The agent asks a clarifying question</td></tr></tbody></table></div>
+<div class="prompt"><div class="prompt-head"><span class="plabel">Instruction add-ons to fix common problems</span><button class="copy" type="button" data-target="p34">Copy</button></div><pre id="p34">If the answer isn&#x27;t in your knowledge sources, say so clearly. Don&#x27;t guess.
+If my request is vague, ask one clarifying question before answering.
+Keep answers under 120 words unless I ask for more detail.
+Format steps as a numbered list and comparisons as a table.
+Only answer questions about [your topic]. For anything else, politely say what you can help with.</pre></div>
+
+<h3>2.4 Demo or stretch: build a SharePoint agent</h3>
+<p>SharePoint agents answer questions using the content of a site or document library, and they respect who has access to what.</p>
+<ul class="files"><li><a href="data/section2-build-an-agent/Store-Policies-and-Procedures.docx" download>Store-Policies-and-Procedures.docx</a><span>SharePoint agent · returns, price match, changeover, safety</span></li></ul>
+<ol class='steps'><li>Upload <b>Store-Policies-and-Procedures.docx</b> (and, if you like, the checklist and handbook) to a SharePoint document library you can edit.</li><li>Select the file(s), then choose <b>Create an agent</b> from the toolbar or the <b>…</b> menu.</li><li>Select <b>Edit</b> to change the name to <i>Store Policy Helper</i>, update the instructions, and check the sources.</li><li>Test it, then save. The agent is saved as a file in the library, so others who can open the library can use it.</li></ol>
+<div class="prompt"><div class="prompt-head"><span class="plabel">SharePoint agent test prompts</span><button class="copy" type="button" data-target="p35">Copy</button></div><pre id="p35">A customer wants to return installed winter tires. What&#x27;s our policy?
+Can we price match a marketplace seller?
+Walk me through the seasonal changeover procedure.
+What do I do after a customer slips at the entrance?</pre></div>
+
+<h3>2.5 Manage and share your agent</h3>
+<ol class='steps'><li><b>Share:</b> open your agent, select <b>Share</b> (or <b>…</b> then <b>Share</b>), and choose specific people or your organization. Copy the link to post in your team's channel.</li><li><b>Permissions still apply:</b> people only get answers from knowledge they can already open. Share the source files or site too, or the agent can't answer for them.</li><li><b>Edit or delete:</b> use the <b>…</b> menu next to the agent in the left pane.</li><li><b>Keep it trustworthy:</b> name an owner, keep knowledge files current, and remove agents nobody uses.</li><li><b>Governance:</b> your IT team controls which agents and sharing options are available. If you can't see an option, that's usually why.</li></ol>
+</section>
+
+<section id="wrap" class="big">
+<h2>Wrap-up: one agent for my team</h2>
+<div class="prompt"><div class="prompt-head"><span class="plabel">My agent plan (Copilot Chat)</span><button class="copy" type="button" data-target="p36">Copy</button></div><pre id="p36">Help me plan one agent for my team. Ask me 5 questions, one at a time, about my role, the questions my team answers again and again, and where those answers live.
+Then propose a name, a description, instructions and 4 starter prompts that I can paste into the agent builder.</pre></div>
+<div class="grid2">
+<div class="card"><h4>💬 Share in chat</h4><ul>
+<li>Which prebuilt agent will you try first this week, and for what?</li>
+<li>What's one question your team answers again and again that an agent could handle?</li>
+<li>What made the biggest difference in your agent: instructions, knowledge or starter prompts?</li></ul></div>
+<div class="card"><h4>✅ Habits to start on day one</h4><ul>
+<li>Pick the right tool: prebuilt agent, your own agent, or Copilot Chat.</li>
+<li>Give agents strong instructions: role, steps, format, boundaries.</li>
+<li>Test with a question the agent <i>shouldn't</i> answer.</li>
+<li>Start small: one agent, one team, one job.</li></ul></div>
+</div>
+<p class="learnmore">Keep learning: <a href="https://learn.microsoft.com/training/paths/implement-no-code-copilot-agents-microsoft-365-sharepoint/" target="_blank" rel="noopener">MS-4019 learning path on Microsoft Learn</a></p>
+
+</section>
+</main>
+<footer>Built for GitHub Pages. Fictional sample data only. Copilot features and menu names can change, so check <a href="https://learn.microsoft.com/training/paths/implement-no-code-copilot-agents-microsoft-365-sharepoint/" target="_blank" rel="noopener">Microsoft Learn</a> for the latest guidance.</footer>
+<script>
+document.querySelectorAll('button.copy').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var el = document.getElementById(btn.getAttribute('data-target'));
+    var text = el ? el.innerText : '';
+    var done = function(){ btn.textContent = 'Copied ✓'; btn.classList.add('done');
+      setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600); };
+    if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(done, function(){ fallback(text); done(); }); }
+    else { fallback(text); done(); }
+  });
+});
+function fallback(text){ var ta=document.createElement('textarea'); ta.value=text; ta.setAttribute('readonly',''); ta.style.position='absolute'; ta.style.insetInlineStart='-9999px'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+</script>
+</body>
+</html>
